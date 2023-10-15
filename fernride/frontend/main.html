@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple HTML Form</title>
+</head>
+<body>
+<h1>Trucks</h1>
+<form>
+    <input type="radio" id="option1" name="radioGroup" value="All"> All Trucks
+    <input type="radio" id="option2" name="radioGroup" value="Healthy"> Healthy Trucks
+    <input type="radio" id="option3" name="radioGroup" value="Non-Healthy"> Non-Healthy Trucks
+</form>
+<button id="button" onclick="printTrucks()">Get Trucks</button>
+
+<div id="trucksDiv"></div>
+
+<script>
+    function printTrucks() {
+        const selectedRadioButton = document.querySelector('input[name="radioGroup"]:checked');
+        if (selectedRadioButton) {
+            const selectedValue = selectedRadioButton.value;
+            if (selectedValue == "All") {
+                fetch("http://localhost:9000/getAllTrucks")
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        result = ""
+                        for (let i = 0; i < data.length; i++) {
+                            result = result + data[i].id + "\n"
+                        }
+                        document.getElementById("trucksDiv").innerText = result;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } else if (selectedValue == "Healthy") {
+                fetch("http://localhost:9000/getAllTrucks")
+                    .then(response => response.json())
+                    .then(data => {
+                        result = ""
+                        for (let i = 0; i < data.length; i++) {
+                            if(data[i].health){
+                                result = result + data[i].id + "\n"
+                            }
+                        }
+                        document.getElementById("trucksDiv").innerText = result;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } else {
+                fetch("http://localhost:9000/getAllTrucks")
+                    .then(response => response.json())
+                    .then(data => {
+                        result = ""
+                        for (let i = 0; i < data.length; i++) {
+                            if(!data[i].health){
+                                result = result + data[i].id + "\n"
+                            }
+                        }
+                        document.getElementById("trucksDiv").innerText = result;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        } else {
+            alert('No radio button is selected.');
+        }
+    }
+</script>
+</body>
+</html>

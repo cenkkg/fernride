@@ -5,6 +5,7 @@ import org.example.vehicles.Truck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
+@CrossOrigin()
 @Controller
 public class TruckTrackerController {
 
@@ -39,6 +41,17 @@ public class TruckTrackerController {
                     HttpStatus.OK);
         } catch(Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during getting truck's health status.");
+        }
+    }
+
+    @GetMapping(path = "/getAllTrucks")
+    public ResponseEntity<?> getAllTrucks() {
+        try{
+            return new ResponseEntity<Object>(
+                    truckTrackerService.getAllTrucks(),
+                    HttpStatus.OK);
+        } catch(Exception e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error during getting all trucks' health status.");
         }
     }
 }
