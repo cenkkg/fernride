@@ -23,7 +23,19 @@ public class TruckTrackerService {
         try{
             return trucks.get(truckId).isHealth();
         } catch (Exception e){
-            throw new RuntimeException("Error while inserting/updating truck.");
+            throw new RuntimeException("Error while getting specific truck.");
+        }
+    }
+
+    public ArrayList<Truck> getAllTrucks() {
+        try{
+            ArrayList<Truck> result = new ArrayList<Truck>();
+            for(Truck eachTruck : trucks.values()){
+                result.add(eachTruck);
+            }
+            return result;
+        } catch (Exception e){
+            throw new RuntimeException("Error while getting all trucks.");
         }
     }
 }
