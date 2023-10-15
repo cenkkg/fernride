@@ -1,0 +1,4 @@
+org/example/Main.class
+org/example/Service/TruckTrackerService.class
+org/example/Controller/TruckTrackerController.class
+org/example/vehicles/Truck.class
