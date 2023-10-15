@@ -1,19 +1,21 @@
 package org.example.Service;
 
-import org.example.vehicles.Truck;
+import lombok.RequiredArgsConstructor;
+import org.example.Model.Truck;
+import org.example.Repository.TruckRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class TruckTrackerService {
-    HashMap<Integer, Truck> trucks = new HashMap<Integer, Truck>();
+    private final TruckRepository truckRepository;
 
     public void saveTruck(Truck truck) {
         try{
-            trucks.put(truck.getId(), truck);
+            truckRepository.save(truck);
         } catch (Exception e){
             throw new RuntimeException("Error while inserting/updating truck.");
         }
@@ -21,7 +23,8 @@ public class TruckTrackerService {
 
     public Boolean getTruckHealthInfo(int truckId) {
         try{
-            return trucks.get(truckId).isHealth();
+            Truck tempTruck = truckRepository.findById(truckId);
+            return tempTruck.isHealth();
         } catch (Exception e){
             throw new RuntimeException("Error while getting specific truck.");
         }
@@ -30,7 +33,7 @@ public class TruckTrackerService {
     public ArrayList<Truck> getAllTrucks() {
         try{
             ArrayList<Truck> result = new ArrayList<Truck>();
-            for(Truck eachTruck : trucks.values()){
+            for(Truck eachTruck : truckRepository.findAll()){
                 result.add(eachTruck);
             }
             return result;

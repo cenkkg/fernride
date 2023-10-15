@@ -1,7 +1,7 @@
 package org.example.Controller;
 
 import org.example.Service.TruckTrackerService;
-import org.example.vehicles.Truck;
+import org.example.Model.Truck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
